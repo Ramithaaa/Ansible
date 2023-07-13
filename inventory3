@@ -1,0 +1,20 @@
+web1 ansible_host=10.0.1.249
+web2 ansible_host=10.0.1.61
+db1 ansible_host=10.0.1.99
+
+[webservers]
+web1
+web2
+
+[dbservers]
+db1
+
+
+[group:children]
+webservers
+dbservers
+
+
+[group:vars]
+ansible_user=ec2-user
+ansible_ssh_private_key_file=webkp.pem 
