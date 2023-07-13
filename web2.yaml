@@ -1,0 +1,30 @@
+- name: apache
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: install httpd
+      ansible.builtin.yum:
+        name: httpd
+        state: present
+    - name: Start httpd
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: yes
+    - name: copy file
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+    - name: Add group
+      group:
+        name: devops
+        state: present
+    - name: Add users
+      user:
+        name: "{{item}}"
+        state: present
+        group: devops
+      loop:
+        - ramitha
+        - radhika
+        - ragi
