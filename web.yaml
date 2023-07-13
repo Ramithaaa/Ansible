@@ -1,24 +1,12 @@
-- name: web
-  hosts: all
+- name: server
+  hosts: webservers
   become: yes
   tasks:
   - name: install httpd
-    yum:
+    ansible.builtin.yum:
       name: httpd
+      state: latest
+  - name: install mysql
+    ansible.builtin.yum:
+      name: mysql
       state: present
-  - name: start httpd
-    service:
-      name: httpd
-      state: started
-      enabled: yes
-  - name: copy
-    become: true
-    copy:
-      src: index.html
-      dest: /var/www/html/index.html
-      backup: yes
-  - name: restart httpd
-    service:
-      name: httpd
-      state: restarted
-      enabled: yes
